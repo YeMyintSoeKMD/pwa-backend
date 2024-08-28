@@ -2,9 +2,10 @@
 1. ``` git clone {repo} ```
 2. ``` composer install ```
 3. Copy ``` .env.example ``` to ``` .env ``` and setup database
-4. ``` php artisan migrate ```
-5. ``` php artisan serve ```
-6. Optinal step (to create fake data)
+4. ``` php artisan key:generate ```
+5. ``` php artisan migrate ```
+6. ``` php artisan serve ```
+7. Optinal step (to create fake data)
 - ``` php artisan tinker ```
 - ``` App\Models\Blog::factory()->count(10)->create(); ```
 
