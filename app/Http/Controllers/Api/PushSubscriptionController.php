@@ -22,10 +22,6 @@ class PushSubscriptionController extends Controller
         if ($doesAlreadyExist) {
             return;
         }
-
-        $request->validate([
-            'data' => 'required|unique:push_subscriptions'
-        ]);
         try {
             PushSubscription::create([
                 'data' => $request->getContent()
