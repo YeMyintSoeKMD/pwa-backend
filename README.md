@@ -4,6 +4,9 @@
 3. Copy ``` .env.example ``` to ``` .env ``` and setup database
 4. ``` php artisan migrate ```
 5. ``` php artisan serve ```
+6. Optinal step (to create fake data)
+- ``` php artisan tinker ```
+- ``` App\Models\Blog::factory()->count(10)->create(); ```
 
 ### Get Public and Private Keys
 1. ``` composer require minishlink/web-push ```
