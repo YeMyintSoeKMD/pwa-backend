@@ -6,10 +6,10 @@
 5. ``` php artisan serve ```
 
 ### Get Public and Private Keys
-``` composer require minishlink/web-push ```
-``` php artisan tinker ```
-``` use Minishlink\WebPush\VAPID; ```
-``` VAPID::createVapidKeys(); ```
+1. ``` composer require minishlink/web-push ```
+2. ``` php artisan tinker ```
+3. ``` use Minishlink\WebPush\VAPID; ```
+4. ``` VAPID::createVapidKeys(); ```
 
-"publicKey" => "BCKU6syjcBdoV3EO3w-k8nior__YBYCTtBPDeD5oqGTwG5D6WVCOdGk2TCOaMQhcJK6-9MvNSAqlb_97CWXshmU",
-"privateKey" => "ongKJvvPRVBWXF_KFWrPZt4eRaRoV7gXc15kSDwp-sY",
+- "publicKey" => "BCKU6syjcBdoV3EO3w-k8nior__YBYCTtBPDeD5oqGTwG5D6WVCOdGk2TCOaMQhcJK6-9MvNSAqlb_97CWXshmU"
+- "privateKey" => "ongKJvvPRVBWXF_KFWrPZt4eRaRoV7gXc15kSDwp-sY",
