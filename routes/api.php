@@ -13,9 +13,12 @@ Route::get('/user', function (Request $request) {
 Route::apiResource('blogs', BlogController::class);
 
 # PushSubscription
-// for just client
-Route::post('push-subscribe', [PushSubscriptionController::class, 'pushSubscribe']);
 // get subscription list
 Route::get('get-subscriptions', [PushSubscriptionController::class, 'getSubscriptions']);
-// Notify
+// for just client
+Route::post('push-subscribe', [PushSubscriptionController::class, 'pushSubscribe']);
+// Notify to single subscription
 Route::post('send-notification/{subscriptionId}', [PushSubscriptionController::class, 'sendNotification']);
+
+// Notify to multi subscriptions
+Route::post('send-notifications', [PushSubscriptionController::class, 'sendNotifications']);

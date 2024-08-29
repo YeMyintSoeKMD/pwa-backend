@@ -13,6 +13,19 @@ use Minishlink\WebPush\WebPush;
 class PushSubscriptionController extends Controller
 {
     /**
+     * Get subscription list
+     */
+    public function getSubscriptions()
+    {
+        try {
+            $data = PushSubscription::all();
+            return $this->successResponse($data);
+        } catch (Exception $e) {
+            return $this->failsResponse('Failed to retrieve subscriptions', $e->getMessage());
+        }
+    }
+
+    /**
      * Subscribed by clients
      */
     public function pushSubscribe(Request $request)
@@ -29,19 +42,6 @@ class PushSubscriptionController extends Controller
             return $this->successResponse(null);
         } catch (Exception $e) {
             return $this->failsResponse('Failed to subscribe', $e->getMessage());
-        }
-    }
-
-    /**
-     * Get subscription list
-     */
-    public function getSubscriptions()
-    {
-        try {
-            $data = PushSubscription::all();
-            return $this->successResponse($data);
-        } catch (Exception $e) {
-            return $this->failsResponse('Failed to retrieve subscriptions', $e->getMessage());
         }
     }
 
@@ -65,6 +65,37 @@ class PushSubscriptionController extends Controller
                 json_encode($request->input())
             );
             return $this->successResponse($result);
+            DB::commit();
+        } catch (\Exception $e) {
+            return $this->failsResponse('Failed to send notification', $e->getMessage());
+            DB::rollBack();
+        }
+    }
+
+
+    /**
+     * Notify multi subscription
+     */
+    public function sendNotifications(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $pushSubscriptions = PushSubscription::all();
+            $webPush = new WebPush([
+                "VAPID" => [
+                    "publicKey" => "BCKU6syjcBdoV3EO3w-k8nior__YBYCTtBPDeD5oqGTwG5D6WVCOdGk2TCOaMQhcJK6-9MvNSAqlb_97CWXshmU",
+                    "privateKey" => "ongKJvvPRVBWXF_KFWrPZt4eRaRoV7gXc15kSDwp-sY",
+                    "subject" => "http://localhost:5173"
+                ]
+            ]);
+
+            foreach ($pushSubscriptions as $pushSubscription) {
+                $webPush->sendOneNotification(
+                    Subscription::create(json_decode($pushSubscription->data, true)),
+                    json_encode($request->input())
+                );
+            }
+            return $this->successResponse(null);
             DB::commit();
         } catch (\Exception $e) {
             return $this->failsResponse('Failed to send notification', $e->getMessage());
